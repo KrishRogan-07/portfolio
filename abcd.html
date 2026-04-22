@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krish Rogan V Portfolio</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #020C1B;
+    color: #E6F1FF;
+}
+
+/* NAV */
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10%;
+    position: fixed;
+    width: 100%;
+    background: rgba(6,26,46,0.8);
+    backdrop-filter: blur(10px);
+}
+
+nav a {
+    color: #E6F1FF;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 10%;
+}
+
+.hero img {
+    width: 250px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0,207,255,0.6);
+}
+
+.hero-text h1 {
+    font-size: 40px;
+}
+
+.btn {
+    padding: 12px 20px;
+    background: linear-gradient(90deg,#1DA1F2,#00CFFF);
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* SECTION */
+section {
+    padding: 80px 10%;
+}
+
+/* PROJECT */
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #061A2E;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(0,207,255,0.5);
+}
+
+.card img {
+    width: 100%;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+/* SKILLS */
+.skills {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.skill {
+    background: #0A2540;
+    padding: 10px 15px;
+    border-radius: 6px;
+}
+
+/* CONTACT */
+.contact-box {
+    background: #061A2E;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,207,255,0.3);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #020C1B;
+    border: 1px solid #00CFFF;
+    color: white;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal video {
+    width: 80%;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+    <h2>Krish</h2>
+    <div>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Krish Rogan V</h1>
+        <p>AI & Data Science Student</p>
+        <p id="typing"></p>
+        <button class="btn" onclick="scrollToSection('projects')">View Projects</button>
+    </div>
+    <img src="profile.jpg" alt="Profile">
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<h2>Projects</h2>
+
+<div class="projects">
+
+<div class="card">
+<img src="project1.png">
+<div class="card-content">
+<h3>Amazon vs Flipkart Dashboard</h3>
+<p>
+Interactive dashboard comparing sales, ratings, product categories,
+and regional distribution between Amazon and Flipkart.
+Includes KPI metrics, map visualization, and product insights.
+</p>
+<button class="btn" onclick="openModal('video1.mp4')">View Demo</button>
+</div>
+</div>
+
+<div class="card">
+<img src="project2.png">
+<div class="card-content">
+<h3>Blinkit Sales Analysis</h3>
+<p>
+Advanced business analytics dashboard showing outlet performance,
+item categories, sales distribution, and decision-making insights.
+</p>
+<button class="btn" onclick="openModal('video2.mp4')">View Demo</button>
+</div>
+</div>
+
+<div class="card">
+<img src="project3.png">
+<div class="card-content">
+<h3>Adidas Sales Analysis</h3>
+<p>
+Comprehensive analysis of sales trends, regions, and product categories
+using charts, maps, and performance metrics.
+</p>
+<button class="btn" onclick="openModal('video3.mp4')">View Demo</button>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- SKILLS -->
+<section>
+<h2>Skills</h2>
+<div class="skills">
+<div class="skill">Python</div>
+<div class="skill">Java</div>
+<div class="skill">SQL</div>
+<div class="skill">Data Analysis</div>
+<div class="skill">Excel</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<h2>Contact Me</h2>
+
+<div class="contact-box">
+<p>Email: krish1rogan@gmail.com</p>
+<p>GitHub: KrishRogan-07</p>
+<p>LinkedIn: krish-rogan-v</p>
+
+<input placeholder="Your Name">
+<input placeholder="Your Email">
+<textarea placeholder="Message"></textarea>
+<button class="btn">Send Message</button>
+</div>
+
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<video controls id="videoPlayer"></video>
+</div>
+
+<script>
+// typing
+const words = ["Machine Learning","Data Analysis","Web Development"];
+let i=0,j=0,current="",isDeleting=false;
+function type(){
+current=words[i];
+if(!isDeleting){j++;if(j==current.length)isDeleting=true;}
+else{j--;if(j==0){isDeleting=false;i=(i+1)%words.length;}}
+document.getElementById("typing").innerText=current.substring(0,j);
+setTimeout(type,100);
+}
+type();
+
+// scroll
+function scrollToSection(id){
+document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+// modal
+function openModal(video){
+const modal=document.getElementById("modal");
+const player=document.getElementById("videoPlayer");
+player.src=video;
+modal.style.display="flex";
+modal.onclick=()=>modal.style.display="none";
+}
+</script>
+
+</body>
+</html>
